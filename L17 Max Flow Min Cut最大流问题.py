@@ -47,3 +47,15 @@ if __name__ == "__main__":
     source = 0
     sink = 5
     print("最大流量为:", edmonds_karp(graph, source, sink))
+'''
+ProblemSet7中的题目：维护一个边容量动态变化的图中的最大流路径
+思路：对于某条边容量升高，则只需要在当前residual network中修改对应的正向边即可
+对于边uv容量减小至r：
+如果总流量小于r，则无任何变化
+否则，每次按如下操作：
+将边uv上流量减小1，为了符合流量守恒，从u开始，在residual network中沿反向边深搜找到源点s，汇点t或v
+然后将路径上的流量-1
+如果找到的是v，则v的流出流量也-1，不用修改了
+如果不是，则从v开始在residual network中沿正向边深搜找到t或s，然后将路径上的流量-1即可
+时间复杂度2*O(k(V+E))(采用DFS)
+'''
